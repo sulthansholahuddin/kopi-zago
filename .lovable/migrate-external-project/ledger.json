@@ -1,0 +1,131 @@
+{
+  "source": "code-archive: Rekayasa_E-Bisnis-Kopi_Jago-main.zip (static HTML/JS + PHP API + MySQL)",
+  "capabilities": [
+    {
+      "capability": "code: landing page (index.html)",
+      "source": "index.html, style.css",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "Opened in browser"
+    },
+    {
+      "capability": "code: login/register modals",
+      "source": "login.html",
+      "outcome": "migrate",
+      "status": "implemented",
+      "next_action": "Sign-in tested with a session; sign-up email and reset email not exercised"
+    },
+    {
+      "capability": "code: customer pages (home/menu, cart, checkout, orders+receipt, wishlist, profile)",
+      "source": "customer/*.html|js",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "Menu, cart, bank-transfer and QRIS checkout, receipt, orders tested end-to-end"
+    },
+    {
+      "capability": "code: Energy rewards (balance, history, redeem, QR scan)",
+      "source": "backend energy/* endpoints, migration_energy_rewards.sql, customer/energy.css",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "Order points and QR claim tested (balance math checked)"
+    },
+    {
+      "capability": "code: admin panel (dashboard, orders, customers, menu, inventory, payments, reports, analytics, QR generator)",
+      "source": "admin/*",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "All admin pages opened; order status flow and QR generation tested"
+    },
+    {
+      "capability": "schema",
+      "source": "backend/databases/schema.sql + database/migration_*.sql",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "Applied in Lovable Cloud"
+    },
+    {
+      "capability": "records: menu, sizes, rewards (seed)",
+      "source": "database/seed*.sql",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "8 drinks, 6 rewards seeded"
+    },
+    {
+      "capability": "records: production data (users, orders, wishlist, energy)",
+      "source": "MySQL kopi_jago_db (no export attached)",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "Waiting on per-table CSV/JSON export from phpMyAdmin"
+    },
+    {
+      "capability": "auth identities",
+      "source": "users table + bearer auth_tokens",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "Legacy users import waits on users export; new sign-ups work"
+    },
+    {
+      "capability": "authorization",
+      "source": "roles customer/admin (seller removed by migration_two_roles.sql)",
+      "outcome": "migrate",
+      "status": "implemented",
+      "next_action": "Admin gate verified; first admin waits on user's email (admin_invites)"
+    },
+    {
+      "capability": "payments: demo simulation (bank transfer instant paid, QRIS 2-min auto-cancel)",
+      "source": "orders POST, payments/create (simulateSuccess=true)",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "Bank instant paid tested; QRIS pending + admin payment update tested"
+    },
+    {
+      "capability": "payments: Midtrans Snap/charge + webhook",
+      "source": "backend/Midtrans.php, payments/notification",
+      "outcome": "dormant in source (unreachable code, placeholder keys)",
+      "status": "not_migrated",
+      "next_action": "Enable later only if user wants real Midtrans payments"
+    },
+    {
+      "capability": "uploaded file bytes (product photos, videos, logo)",
+      "source": "repo root media",
+      "outcome": "migrate",
+      "status": "verified",
+      "next_action": "Uploaded via lovable-assets"
+    },
+    {
+      "capability": "inactive source features: sellers/vehicles/tracking, schedule slots, Jago Party, promos, ratings, support chat, addresses",
+      "source": "backend endpoints without UI or with missing tables",
+      "outcome": "not migrated (no working UI or tables in source)",
+      "status": "accepted_pending_user",
+      "next_action": "Mention to user"
+    },
+    {
+      "capability": "public endpoints/webhooks/schedules",
+      "source": "Midtrans webhook only; QRIS auto-cancel ran per request",
+      "outcome": "QRIS expiry recreated as database function",
+      "status": "verified",
+      "next_action": "No external callers remain active"
+    },
+    {
+      "capability": "secrets",
+      "source": "none required (Midtrans dormant)",
+      "outcome": "none",
+      "status": "verified",
+      "next_action": ""
+    },
+    {
+      "capability": "cutover",
+      "source": "PHP server on localhost",
+      "outcome": "n/a",
+      "status": "pending",
+      "next_action": "Publish when ready"
+    },
+    {
+      "capability": "verification",
+      "source": "",
+      "outcome": "",
+      "status": "implemented",
+      "next_action": "Signed-in end-to-end checks passed; legacy user claim untested until export"
+    }
+  ]
+}
