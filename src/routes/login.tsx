@@ -473,7 +473,7 @@ function RegisterForm({ onSwitch }: { onSwitch: Switch }) {
         email: email.trim(),
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/login`,
+          emailRedirectTo: `${import.meta.env.VITE_SITE_URL}/login`,
           data: {
             name: name.trim(),
             birth_date: birthDate,
